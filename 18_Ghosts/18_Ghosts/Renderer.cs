@@ -11,8 +11,7 @@ namespace _18_Ghosts
 
         }
 
-
-        public void DrawMenu()
+        public void RenderMenu()
         {
             Console.Clear();
 
