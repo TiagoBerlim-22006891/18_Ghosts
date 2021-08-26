@@ -8,8 +8,6 @@ namespace _18_Ghosts
     {
         public Renderer() {}
 
-        int consoleX, consoleY;
-
         public void RenderMenu()
         {
             Console.Clear();
@@ -47,18 +45,7 @@ namespace _18_Ghosts
                         Console.ForegroundColor = board[y, x].TileColor;
                     }
 
-                    if (board[y, x].isMirrorTile)
-                    {
-                        Console.Write("A");
-                    }
-                    else if (board[y, x].isExitTile)
-                    {
-                        Console.Write('U');
-                    }
-                    else
-                    {
-                        Console.Write('*');
-                    }
+                    Console.Write(board[y, x].Sprite);
 
                     Console.ForegroundColor = ConsoleColor.White;
                 }

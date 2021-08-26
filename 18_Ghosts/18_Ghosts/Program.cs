@@ -1,18 +1,17 @@
 ﻿using System;
+using System.Text;
 
 namespace _18_Ghosts
 {
     class Program
     {
-        static Menu menu;
-
         static void Main(string[] args)
         {
-            menu = new Menu();
+            Console.OutputEncoding = Encoding.UTF8;
+
+            Menu menu = new Menu();
 
             menu.Init();
-
-            Console.ReadKey();
         }
     }
 }

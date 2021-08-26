@@ -9,23 +9,45 @@ namespace _18_Ghosts
         public ConsoleColor TileColor { get; }
         public TileOrientation Orientation { get; set; }
 
-        public Ghost Tghost { get; set; }
+        public Ghost TileGhost { get; set; }
+
+        private string sprite;
+        public string Sprite {
+            get
+            {
+                if (!isExitTile) return sprite;
+
+                switch (Orientation)
+                {
+                    case TileOrientation.Up:
+                        return "↑";
+                    case TileOrientation.Down:
+                        return "↓";
+                    case TileOrientation.Left:
+                        return "←";
+                    default:
+                        return "→";
+                }
+            }
+        }
 
         public bool isExitTile { get; }
         public bool isMirrorTile { get; }
 
-        public Tile(ConsoleColor TileColor, bool isMirrorTile = false) : this()
+        public Tile(string sprite, ConsoleColor tileColor, bool isMirrorTile = false) : this()
         {
-            this.TileColor = TileColor;
+            this.sprite = sprite;
+            TileColor = tileColor;
             Orientation = TileOrientation.None;
             isExitTile = false;
             this.isMirrorTile = isMirrorTile;
         }
 
-        public Tile(ConsoleColor TileColor, TileOrientation Orientation) : this()
+        public Tile(ConsoleColor tileColor, TileOrientation orientation) : this()
         {
-            this.TileColor = TileColor;
-            this.Orientation = Orientation;
+            sprite = ".";
+            TileColor = tileColor;
+            Orientation = orientation;
             isExitTile = true;
             isMirrorTile = false;
         }
