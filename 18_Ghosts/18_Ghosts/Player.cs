@@ -4,11 +4,9 @@ using System.Text;
 
 namespace _18_Ghosts
 {
-    enum TileColor
+    enum Player
     {
-        None,
-        Red,
-        Blue,
-        Yellow
+        A,
+        B
     }
 }

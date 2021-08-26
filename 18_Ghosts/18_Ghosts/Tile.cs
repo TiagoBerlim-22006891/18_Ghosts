@@ -6,7 +6,7 @@ namespace _18_Ghosts
 {
     struct Tile
     {
-        public TileColor Color { get; }
+        public Color TileColor { get; }
         public TileOrientation Orientation { get; set; }
 
         public Ghost Tghost { get; set; }
@@ -14,17 +14,17 @@ namespace _18_Ghosts
         public bool isExitTile { get; }
         public bool isMirrorTile { get; }
 
-        public Tile(TileColor Color, bool isMirrorTile = false) : this()
+        public Tile(Color TileColor, bool isMirrorTile = false) : this()
         {
-            this.Color = Color;
+            this.TileColor = TileColor;
             Orientation = TileOrientation.None;
             isExitTile = false;
             this.isMirrorTile = isMirrorTile;
         }
 
-        public Tile(TileColor Color, TileOrientation Orientation) : this()
+        public Tile(Color TileColor, TileOrientation Orientation) : this()
         {
-            this.Color = Color;
+            this.TileColor = TileColor;
             this.Orientation = Orientation;
             isExitTile = true;
             isMirrorTile = false;

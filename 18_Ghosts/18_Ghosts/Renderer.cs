@@ -6,10 +6,7 @@ namespace _18_Ghosts
 {
     class Renderer
     {
-        public Renderer()
-        {
-
-        }
+        public Renderer() {}
 
         public void RenderMenu()
         {
@@ -33,5 +30,11 @@ namespace _18_Ghosts
             Console.WriteLine("\t  |                   |");
             Console.WriteLine("\t  ---------------------");
         }
+
+        public void RenderBoard()
+        {
+
+        }
+
     }
 }
