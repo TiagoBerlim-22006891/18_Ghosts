@@ -8,17 +8,17 @@ namespace _18_Ghosts
     {
         public char Sprite { get; }
 
-        public Player Owner { get; }
+        public PlayerType Owner { get; }
 
         public ConsoleColor GhostColor { get; }
 
-        public Ghost(Player owner, ConsoleColor color)
+        public Ghost(PlayerType owner, ConsoleColor color)
         {
             Owner = owner;
 
             GhostColor = color;
 
-            Sprite = Owner == Player.A ? 'M' : 'W';
+            Sprite = Owner == PlayerType.A ? 'M' : 'W';
         }
     }
 }
