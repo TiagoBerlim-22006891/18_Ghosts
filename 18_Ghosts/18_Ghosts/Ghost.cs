@@ -10,9 +10,9 @@ namespace _18_Ghosts
 
         public Player Owner { get; }
 
-        public Color GhostColor { get; }
+        public ConsoleColor GhostColor { get; }
 
-        public Ghost(Player owner, Color color)
+        public Ghost(Player owner, ConsoleColor color)
         {
             Owner = owner;
 

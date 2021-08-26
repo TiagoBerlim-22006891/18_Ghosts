@@ -8,6 +8,8 @@ namespace _18_Ghosts
     {
         public Renderer() {}
 
+        int consoleX, consoleY;
+
         public void RenderMenu()
         {
             Console.Clear();
@@ -31,10 +33,38 @@ namespace _18_Ghosts
             Console.WriteLine("\t  ---------------------");
         }
 
-        public void RenderBoard()
+        public void RenderBoard(Tile[,] board)
         {
+            Console.Clear();
+            for (int y = 0; y < 5; y++)
+            {
+                for (int x = 0; x < 5; x++)
+                {
+                    Console.SetCursorPosition(x, y);
 
+                    if (board[y, x].TileColor != ConsoleColor.Black)
+                    {
+                        Console.ForegroundColor = board[y, x].TileColor;
+                    }
+
+                    if (board[y, x].isMirrorTile)
+                    {
+                        Console.Write("A");
+                    }
+                    else if (board[y, x].isExitTile)
+                    {
+                        Console.Write('U');
+                    }
+                    else
+                    {
+                        Console.Write('*');
+                    }
+
+                    Console.ForegroundColor = ConsoleColor.White;
+                }
+            }
+            Console.ReadKey();
+            Console.ReadKey();
         }
-
     }
 }
