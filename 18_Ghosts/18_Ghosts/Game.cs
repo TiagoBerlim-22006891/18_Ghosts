@@ -7,10 +7,17 @@ namespace _18_Ghosts
 {
     class Game
     {
+        private Random rand;
+
         private Renderer render;
 
         private Tile[,] board;
         private List<Ghost> dungeon;
+
+        private Player playerOne;
+        private Player playerTwo;
+
+        private bool gameOver;
 
         public Game(Renderer render)
         {
@@ -19,6 +26,10 @@ namespace _18_Ghosts
             board = new Tile[5, 5];
 
             dungeon = new List<Ghost>();
+
+            gameOver = false;
+
+            rand = new Random();
         }
 
         public void Init()
@@ -53,36 +64,73 @@ namespace _18_Ghosts
             board[4, 2] = new Tile(ConsoleColor.Blue, TileOrientation.Down);
             board[4, 3] = new Tile("╩", ConsoleColor.Blue);
             board[4, 4] = new Tile("╝", ConsoleColor.Yellow);
-            /*
-            for (int y = 0; y < 5; y++)
-            {
-                for (int x = 0; x < 5; x++)
-                {
-                    if (new int[] {00, 30, 12, 32, 03, 24, 34}.Contains(Convert.ToInt32(string.Format("{0}{1}", x, y))))
-                    {
-                        board[y, x] = x == 2 && y == 4 ? new Tile(ConsoleColor.Blue, TileOrientation.Down) : new Tile(ConsoleColor.Blue);
-                    }
-                    else if (new int[] { 10, 20, 40, 02, 22, 43, 14 }.Contains(Convert.ToInt32(string.Format("{0}{1}", x, y))))
-                    {
-                        board[y, x] = x == 2 && y == 0 ? new Tile(ConsoleColor.Red, TileOrientation.Up) : new Tile(ConsoleColor.Red);
-                    }
-                    else if (new int[] { 01, 21, 41, 42, 23, 04, 44 }.Contains(Convert.ToInt32(string.Format("{0}{1}", x, y))))
-                    {
-                        board[y, x] = x == 4 && y == 2 ? new Tile(ConsoleColor.Yellow, TileOrientation.Left) : new Tile(ConsoleColor.Yellow);
-                    }
-                    else
-                    {
-                        board[y, x] = new Tile(ConsoleColor.Black, true);
-                    }
-                }
-            }
-            */
-            render.RenderBoard(board);
+            
+            playerOne = new Player(PlayerType.A);
+            playerTwo = new Player(PlayerType.B);
+
+            PlaceGhosts();
+
+            GameLoop();
         }
 
         private void GameLoop()
         {
+            do
+            {
+                // Dar render ao tabuleiro
+                render.RenderBoard(board);
 
+
+
+            } while (!gameOver);
+        }
+
+        private void PlaceGhosts()
+        {
+            Player currentPlaying;
+
+            bool ghostPlaced = false;
+
+            for (int y = 0; y < 5; y++)
+            {
+                for (int x = 0; x < 5; x++)
+                {
+                    if (board[y, x].isExitTile || board[y, x].isMirrorTile)
+                    {
+                        continue;
+                    }
+
+                    currentPlaying = rand.NextDouble() < 0.5 ? playerOne : playerTwo;
+                    
+                    foreach( Ghost ghost in currentPlaying.Ghosts)
+                    {
+                        if (ghost.GhostColor == board[y, x].TileColor && !ghost.InGame)
+                        {
+                            ghost.InGame = true;
+                            board[y, x].TileGhost = ghost;
+                            ghostPlaced = true;
+                            break;
+                        }
+                    }
+
+                    if (!ghostPlaced)
+                    {
+                        currentPlaying = currentPlaying == playerOne ? playerTwo : playerOne;
+                        
+                        foreach (Ghost ghost in currentPlaying.Ghosts)
+                        {
+                            if (ghost.GhostColor == board[y, x].TileColor && !ghost.InGame)
+                            {
+                                ghost.InGame = true;
+                                board[y, x].TileGhost = ghost;
+                                break;
+                            }
+                        }
+                    }
+
+                    ghostPlaced = false;
+                }
+            }
         }
 
     }

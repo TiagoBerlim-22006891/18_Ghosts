@@ -45,7 +45,14 @@ namespace _18_Ghosts
                         Console.ForegroundColor = board[y, x].TileColor;
                     }
 
-                    Console.Write(board[y, x].Sprite);
+                    if (board[y, x].TileGhost != null)
+                    {
+                        Console.Write(board[y, x].TileGhost.Sprite);
+                    }
+                    else
+                    {
+                        Console.Write(board[y, x].Sprite);
+                    }
 
                     Console.ForegroundColor = ConsoleColor.White;
                 }

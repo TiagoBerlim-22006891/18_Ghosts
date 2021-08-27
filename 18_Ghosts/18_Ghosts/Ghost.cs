@@ -12,6 +12,17 @@ namespace _18_Ghosts
 
         public ConsoleColor GhostColor { get; }
 
+        private bool inGame;
+        public bool InGame { 
+            get => inGame; 
+            set { 
+                if (!inGame)
+                {
+                    inGame = value;
+                }
+            } 
+        }
+
         public Ghost(PlayerType owner, ConsoleColor color)
         {
             Owner = owner;
@@ -19,6 +30,8 @@ namespace _18_Ghosts
             GhostColor = color;
 
             Sprite = Owner == PlayerType.A ? 'M' : 'W';
+
+            inGame = false;
         }
     }
 }
