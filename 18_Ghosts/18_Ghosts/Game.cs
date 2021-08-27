@@ -101,36 +101,34 @@ namespace _18_Ghosts
                     }
 
                     currentPlaying = rand.NextDouble() < 0.5 ? playerOne : playerTwo;
-                    
-                    foreach( Ghost ghost in currentPlaying.Ghosts)
-                    {
-                        if (ghost.GhostColor == board[y, x].TileColor && !ghost.InGame)
-                        {
-                            ghost.InGame = true;
-                            board[y, x].TileGhost = ghost;
-                            ghostPlaced = true;
-                            break;
-                        }
-                    }
+
+                    ghostPlaced = TryPlacing(currentPlaying, x, y);
 
                     if (!ghostPlaced)
                     {
                         currentPlaying = currentPlaying == playerOne ? playerTwo : playerOne;
-                        
-                        foreach (Ghost ghost in currentPlaying.Ghosts)
-                        {
-                            if (ghost.GhostColor == board[y, x].TileColor && !ghost.InGame)
-                            {
-                                ghost.InGame = true;
-                                board[y, x].TileGhost = ghost;
-                                break;
-                            }
-                        }
+
+                        TryPlacing(currentPlaying, x, y);
                     }
 
                     ghostPlaced = false;
                 }
             }
+        }
+
+        private bool TryPlacing(Player currentPlaying, int x, int y)
+        {
+            foreach (Ghost ghost in currentPlaying.Ghosts)
+            {
+                if (ghost.GhostColor == board[y, x].TileColor && !ghost.InGame)
+                {
+                    ghost.InGame = true;
+                    board[y, x].TileGhost = ghost;
+                    return true;
+                }
+            }
+
+            return false;
         }
 
     }
