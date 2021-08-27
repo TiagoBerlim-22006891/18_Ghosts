@@ -29,7 +29,7 @@ namespace _18_Ghosts
 
             GhostColor = color;
 
-            Sprite = Owner == PlayerType.A ? 'M' : 'W';
+            Sprite = Owner == PlayerType.A ? '☺' : '☻';
 
             inGame = false;
         }
