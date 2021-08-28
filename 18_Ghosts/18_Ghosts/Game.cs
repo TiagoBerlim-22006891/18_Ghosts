@@ -108,9 +108,70 @@ namespace _18_Ghosts
 
                 MoveGhost();
 
-
+                CheckPortalRotation();
 
             } while (!gameOver);
+        }
+
+        // Verificamos se o fantasma pode escapar
+        private void GhostTryEscape(int x, int y, ConsoleColor color)
+        {
+            if (board[y, x].TileGhost != null && board[y, x].TileGhost.GhostColor == color)
+            {
+                if (board[y, x].TileGhost.Owner == PlayerType.A)
+                {
+                    playerOne.EscapedGhosts++;
+                }
+                else
+                {
+                    playerTwo.EscapedGhosts++;
+                }
+
+                board[y, x].TileGhost = null;
+            }
+        }
+
+        private void CheckPortalRotation()
+        {
+            // Verificar ao pe do portal vermelho
+            switch (board[0, 2].Orientation)
+            {
+                case TileOrientation.Left:
+                    GhostTryEscape(1, 0, ConsoleColor.Red);
+                    break;
+                case TileOrientation.Down:
+                    GhostTryEscape(2, 1, ConsoleColor.Red);
+                    break;
+                case TileOrientation.Right:
+                    GhostTryEscape(3, 0, ConsoleColor.Red);
+                    break;
+            }
+            // Verificar ao pe do portal amarelo
+            switch (board[2, 4].Orientation)
+            {
+                case TileOrientation.Up:
+                    GhostTryEscape(4, 1, ConsoleColor.Yellow);
+                    break;
+                case TileOrientation.Left:
+                    GhostTryEscape(3, 2, ConsoleColor.Yellow);
+                    break;
+                case TileOrientation.Down:
+                    GhostTryEscape(4, 3, ConsoleColor.Yellow);
+                    break;
+            }
+            // Verificar ao pe do portal azul
+            switch (board[4, 2].Orientation)
+            {
+                case TileOrientation.Left:
+                    GhostTryEscape(1, 4, ConsoleColor.Yellow);
+                    break;
+                case TileOrientation.Up:
+                    GhostTryEscape(2, 3, ConsoleColor.Yellow);
+                    break;
+                case TileOrientation.Right:
+                    GhostTryEscape(3, 4, ConsoleColor.Yellow);
+                    break;
+            }
         }
 
         private int UpdateXY()

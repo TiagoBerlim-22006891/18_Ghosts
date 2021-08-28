@@ -8,33 +8,27 @@ namespace _18_Ghosts
     {
         public Ghost[] Ghosts { get; private set; }
 
+        // Quantos fantasmas já escaparam
+        public int EscapedGhosts { get; set; }
+
         public PlayerType Type { get; }
         
         public Player(PlayerType type)
         {
             Type = type;
             Ghosts = new Ghost[9];
+            EscapedGhosts = 0;
 
-            InitializeGhosts();
-        }
-
-        private void InitializeGhosts()
-        {
-            for (int i = 0; i < Ghosts.Length; i++)
-            {
-                if (i < 3)
-                {
-                    Ghosts[i] = new Ghost(Type, ConsoleColor.Red);
-                }
-                else if (i < 6)
-                {
-                    Ghosts[i] = new Ghost(Type, ConsoleColor.Blue);
-                }
-                else
-                {
-                    Ghosts[i] = new Ghost(Type, ConsoleColor.Yellow);
-                }
-            }
+            // Inicializar os fantasmas
+            Ghosts[0] = new Ghost(Type, ConsoleColor.Red);
+            Ghosts[1] = new Ghost(Type, ConsoleColor.Red);
+            Ghosts[2] = new Ghost(Type, ConsoleColor.Red);
+            Ghosts[3] = new Ghost(Type, ConsoleColor.Blue);
+            Ghosts[4] = new Ghost(Type, ConsoleColor.Blue);
+            Ghosts[5] = new Ghost(Type, ConsoleColor.Blue);
+            Ghosts[6] = new Ghost(Type, ConsoleColor.Yellow);
+            Ghosts[7] = new Ghost(Type, ConsoleColor.Yellow);
+            Ghosts[8] = new Ghost(Type, ConsoleColor.Yellow);
         }
     }
 }
