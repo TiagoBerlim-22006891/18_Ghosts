@@ -121,7 +121,7 @@ namespace _18_Ghosts
 
             } while (winCondition == 0);
 
-            render.DisplayWinner(winCondition);
+            render.RenderWinner(winCondition);
             Console.ReadKey();
         }
 
