@@ -77,5 +77,20 @@ namespace _18_Ghosts
             Console.WriteLine("Use the arrow keys to move your ghost...");
         }
 
+        public void RenderWinner(int winCondition)
+        {
+            switch (winCondition)
+            {
+                case 1:
+                    Console.WriteLine("!!! PLAYER 1 WON !!!");
+                    break;
+                case 2:
+                    Console.WriteLine("!!! PLAYER 2 WON !!!");
+                    break;
+                case 3:
+                    Console.WriteLine("!!! IT'S A TIE !!!");
+                    break;
+            }
+        }
     }
 }

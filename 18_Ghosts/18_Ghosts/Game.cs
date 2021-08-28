@@ -19,7 +19,7 @@ namespace _18_Ghosts
         private Player playerOne;
         private Player playerTwo;
 
-        private bool gameOver;
+        private int winCondition;
 
         // Posição x e y actual
         private int xPos;
@@ -110,7 +110,19 @@ namespace _18_Ghosts
 
                 CheckPortalRotation();
 
-            } while (!gameOver);
+                if (playerOne.EscapedGhosts >= 3)
+                {
+                    winCondition = 1;
+                }
+                if (playerTwo.EscapedGhosts >= 3)
+                {
+                    winCondition = winCondition == 1 ? 3 : 2;
+                }
+
+            } while (winCondition == 0);
+
+            render.DisplayWinner(winCondition);
+            Console.ReadKey();
         }
 
         // Verificamos se o fantasma pode escapar
