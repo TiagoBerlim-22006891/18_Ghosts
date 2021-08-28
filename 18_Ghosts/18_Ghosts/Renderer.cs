@@ -47,6 +47,7 @@ namespace _18_Ghosts
 
                     if (board[y, x].TileGhost != null)
                     {
+                        Console.ForegroundColor = board[y, x].TileGhost.GhostColor;
                         Console.Write(board[y, x].TileGhost.Sprite);
                     }
                     else
@@ -60,5 +61,21 @@ namespace _18_Ghosts
             Console.ReadKey();
             Console.ReadKey();
         }
+
+        public void GhostToMove(char axis)
+        {
+            Console.WriteLine($"What's the {axis} position of the ghost you want to control?");
+        }
+
+        public void ErrorMessage()
+        {
+            Console.WriteLine("That input is not valid. Try Again...");
+        }
+
+        public void MoveGhost()
+        {
+            Console.WriteLine("Use the arrow keys to move your ghost...");
+        }
+
     }
 }

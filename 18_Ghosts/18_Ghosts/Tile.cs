@@ -7,7 +7,12 @@ namespace _18_Ghosts
     struct Tile
     {
         public ConsoleColor TileColor { get; }
-        public TileOrientation Orientation { get; set; }
+        
+        private TileOrientation orientation;
+        public TileOrientation Orientation {
+            get => orientation;
+            set => orientation = (int)value == 5 ? TileOrientation.Up : value;
+        }
 
         public Ghost TileGhost { get; set; }
 
