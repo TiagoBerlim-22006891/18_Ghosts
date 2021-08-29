@@ -37,27 +37,27 @@ namespace _18_Ghosts
             Console.WriteLine("\t  ---------------------");
         }
 
-        public void RenderScene(Tile[,] board, Player currentPlayer)
+        public void RenderScene(Tile[,] board, List<Ghost> dungeon, Player currentPlayer)
         {
             Console.Clear();
 
             Console.WriteLine();
-            Console.WriteLine(" _______________________________________________ ");
-            Console.WriteLine("|       |       |       |       |       |       |");
-            Console.WriteLine("|       |       |       |       |       |       |");
-            Console.WriteLine("|_______|_______|_______|_______|_______|       |");
-            Console.WriteLine("|       |       |       |       |       |       |");
-            Console.WriteLine("|       |       |       |       |       |       |");
-            Console.WriteLine("|_______|_______|_______|_______|_______|       |");
-            Console.WriteLine("|       |       |       |       |       |       |");
-            Console.WriteLine("|       |       |       |       |       |       |");
-            Console.WriteLine("|_______|_______|_______|_______|_______|       |");
-            Console.WriteLine("|       |       |       |       |       |       |");
-            Console.WriteLine("|       |       |       |       |       |       |");
-            Console.WriteLine("|_______|_______|_______|_______|_______|       |");
-            Console.WriteLine("|       |       |       |       |       |       |");
-            Console.WriteLine("|       |       |       |       |       |       |");
-            Console.WriteLine("|_______|_______|_______|_______|_______|_______|");
+            Console.WriteLine(" ________________________________________________");
+            Console.WriteLine("|       |       |       |       |       |        |");
+            Console.WriteLine("|       |       |       |       |       |        |");
+            Console.WriteLine("|_______|_______|_______|_______|_______|        |");
+            Console.WriteLine("|       |       |       |       |       |        |");
+            Console.WriteLine("|       |       |       |       |       |        |");
+            Console.WriteLine("|_______|_______|_______|_______|_______|        |");
+            Console.WriteLine("|       |       |       |       |       |        |");
+            Console.WriteLine("|       |       |       |       |       |        |");
+            Console.WriteLine("|_______|_______|_______|_______|_______|        |");
+            Console.WriteLine("|       |       |       |       |       |        |");
+            Console.WriteLine("|       |       |       |       |       |        |");
+            Console.WriteLine("|_______|_______|_______|_______|_______|        |");
+            Console.WriteLine("|       |       |       |       |       |        |");
+            Console.WriteLine("|       |       |       |       |       |        |");
+            Console.WriteLine("|_______|_______|_______|_______|_______|________|");
 
             for (int y = 0; y < 5; y++)
             {
@@ -88,6 +88,20 @@ namespace _18_Ghosts
                     ResetForeground();
                 }
             }
+
+            // Local em X da dungeon para desenhar os fantasmas
+            int dungeonX = 43;
+
+            for (int i = 0; i < dungeon.Count; i++)
+            {
+                Console.SetCursorPosition(dungeonX, ((i + 1) * 3) / (i < 2 ? 1 : 2));
+                Console.ForegroundColor = dungeon[i].GhostColor;
+                Console.Write(dungeon[i].Sprite);
+
+                dungeonX = dungeonX == 43 ? 46 : 43;
+            }
+
+            ResetForeground();
 
             HelpMenu();
             PlayerStats(currentPlayer);
