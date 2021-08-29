@@ -91,14 +91,20 @@ namespace _18_Ghosts
 
             // Local em X da dungeon para desenhar os fantasmas
             int dungeonX = 43;
+            int yCounter = 1;
 
             for (int i = 0; i < dungeon.Count; i++)
             {
-                Console.SetCursorPosition(dungeonX, ((i + 1) * 3) / (i < 2 ? 1 : 2));
+                Console.SetCursorPosition(dungeonX, yCounter * 3);
                 Console.ForegroundColor = dungeon[i].GhostColor;
                 Console.Write(dungeon[i].Sprite);
 
                 dungeonX = dungeonX == 43 ? 46 : 43;
+
+                if (i % 2 != 0)
+                {
+                    yCounter++;
+                }
             }
 
             ResetForeground();
