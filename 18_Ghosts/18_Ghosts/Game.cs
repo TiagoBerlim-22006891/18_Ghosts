@@ -405,63 +405,26 @@ namespace _18_Ghosts
             } while (x > 4 || x < 0 || y > 4 || y < 0 || board[y, x].isExitTile ||
                     (board[y, x].TileGhost != null && 
                     board[y, x].TileGhost.GhostColor == board[yPos, xPos].TileGhost.GhostColor));
-            
-            if (board[y, x].TileGhost != null)
-            {
-                ConsoleColor myColor = board[yPos, xPos].TileGhost.GhostColor;
-                ConsoleColor otherColor = board[y, x].TileGhost.GhostColor;
 
-                switch (myColor)
-                {
-                    case ConsoleColor.Red:
-                        if (otherColor == ConsoleColor.Yellow)
-                        {
-                            dungeon.Add(board[yPos, xPos].TileGhost);
-                            board[0, 2].Orientation++;
-                        }
-                        else
-                        {
-                            dungeon.Add(board[y, x].TileGhost);
-                            board[y, x].TileGhost = board[yPos, xPos].TileGhost;
-                            board[4, 2].Orientation++;
-                        }
-                        break;
-                    case ConsoleColor.Blue:
-                        if (otherColor == ConsoleColor.Red)
-                        {
-                            dungeon.Add(board[yPos, xPos].TileGhost);
-                            board[4, 2].Orientation++;
-                        }
-                        else
-                        {
-                            dungeon.Add(board[y, x].TileGhost);
-                            board[y, x].TileGhost = board[yPos, xPos].TileGhost;
-                            board[2, 4].Orientation++;
-                        }
-                        break;
-                    case ConsoleColor.Yellow:
-                        if (otherColor == ConsoleColor.Blue)
-                        {
-                            dungeon.Add(board[yPos, xPos].TileGhost);
-                            board[2, 4].Orientation++;
-                        }
-                        else
-                        {
-                            dungeon.Add(board[y, x].TileGhost);
-                            board[y, x].TileGhost = board[yPos, xPos].TileGhost;
-                            board[0, 2].Orientation++;
-                        }
-                        break;
-                }
-            }
-            else if (board[y, x].isMirrorTile)
+            if (board[y, x].isMirrorTile)
             {
                 x += 2;
                 y += 2;
                 x = x == 5 ? 1 : x;
                 y = y == 5 ? 1 : y;
 
-                board[y, x].TileGhost = board[yPos, xPos].TileGhost;
+                if (board[y, x].TileGhost != null)
+                {
+                    GhostFight(x, y);
+                }
+                else
+                {
+                    board[y, x].TileGhost = board[yPos, xPos].TileGhost;
+                }
+            }
+            else if (board[y, x].TileGhost != null)
+            {
+                GhostFight(x, y);
             }
             else
             {
@@ -469,6 +432,55 @@ namespace _18_Ghosts
             }
 
             board[yPos, xPos].TileGhost = null;
+        }
+
+        public void GhostFight(int x, int y)
+        {
+            ConsoleColor myColor = board[yPos, xPos].TileGhost.GhostColor;
+            ConsoleColor otherColor = board[y, x].TileGhost.GhostColor;
+
+            switch (myColor)
+            {
+                case ConsoleColor.Red:
+                    if (otherColor == ConsoleColor.Yellow)
+                    {
+                        dungeon.Add(board[yPos, xPos].TileGhost);
+                        board[0, 2].Orientation++;
+                    }
+                    else
+                    {
+                        dungeon.Add(board[y, x].TileGhost);
+                        board[y, x].TileGhost = board[yPos, xPos].TileGhost;
+                        board[4, 2].Orientation++;
+                    }
+                    break;
+                case ConsoleColor.Blue:
+                    if (otherColor == ConsoleColor.Red)
+                    {
+                        dungeon.Add(board[yPos, xPos].TileGhost);
+                        board[4, 2].Orientation++;
+                    }
+                    else
+                    {
+                        dungeon.Add(board[y, x].TileGhost);
+                        board[y, x].TileGhost = board[yPos, xPos].TileGhost;
+                        board[2, 4].Orientation++;
+                    }
+                    break;
+                case ConsoleColor.Yellow:
+                    if (otherColor == ConsoleColor.Blue)
+                    {
+                        dungeon.Add(board[yPos, xPos].TileGhost);
+                        board[2, 4].Orientation++;
+                    }
+                    else
+                    {
+                        dungeon.Add(board[y, x].TileGhost);
+                        board[y, x].TileGhost = board[yPos, xPos].TileGhost;
+                        board[0, 2].Orientation++;
+                    }
+                    break;
+            }
         }
 
         // Verifica se a casa selecionada tem um fantasma do jogador

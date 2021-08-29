@@ -146,7 +146,7 @@ namespace _18_Ghosts
 
         public void MoveGhost()
         {
-            Console.WriteLine("Use the arrow keys to move your ghost...");
+            Console.WriteLine("\nUse the arrow keys to move your ghost...");
         }
 
         public void PlaceGhost(ConsoleColor color)
