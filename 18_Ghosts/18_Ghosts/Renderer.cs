@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace _18_Ghosts
 {
@@ -38,7 +37,7 @@ namespace _18_Ghosts
             Console.WriteLine("\t  ---------------------");
         }
 
-        public void RenderBoard(Tile[,] board)
+        public void RenderScene(Tile[,] board, Player currentPlayer)
         {
             Console.Clear();
 
@@ -86,33 +85,52 @@ namespace _18_Ghosts
                         Console.Write(board[y, x].Sprite);
                     }
 
-                    Console.ForegroundColor = ConsoleColor.White;
+                    ResetForeground();
                 }
             }
 
             HelpMenu();
+            PlayerStats(currentPlayer);
+        }
+
+        private void HelpMenu()
+        {
+            Console.SetCursorPosition(50, 2);
+            Console.Write(" Carpet \t\t ║  ╔ ╗ ═ ╚ ╝ ╬ ╦ ╩ ╠ ╣ ");
+            Console.SetCursorPosition(50, 4);
+            Console.Write(" Portal \t\t Up ↑ | Down ↓ | Left ←  | Right → ");
+            Console.SetCursorPosition(50, 6);
+            Console.Write(" Mirror \t\t A ");
+            Console.SetCursorPosition(50, 8);
+            Console.Write(" Player A Ghost \t ☺ ");
+            Console.SetCursorPosition(50, 10);
+            Console.Write(" Player B Ghost \t ☻ ");
+        }
+
+        private void PlayerStats(Player currentPlayer)
+        {
+            Console.SetCursorPosition(50, 13);
+            Console.Write(" Player Stats:");
+
+            Console.SetCursorPosition(50, 15);
+            Console.Write($" Current Player: ");
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.Write($"Player {currentPlayer.Type}");
+            ResetForeground();
+
+            Console.SetCursorPosition(50, 16);
+            Console.Write($" Freed Ghosts: ");
+            Console.ForegroundColor = currentPlayer.EscapedGhosts > 0 ?
+                ConsoleColor.Green : ConsoleColor.Red;
+            Console.Write(currentPlayer.EscapedGhosts);
+            ResetForeground();
 
             Console.SetCursorPosition(0, 18);
         }
 
-        public void HelpMenu()
-        {
-            Console.SetCursorPosition(50, 4);
-            Console.Write(" Carpet \t\t ║  ╔ ╗ ═ ╚ ╝ ╬ ╦ ╩ ╠ ╣ ");
-            Console.SetCursorPosition(50, 6);
-            Console.Write(" Portal \t\t Up ↑ | Down ↓ | Left ←  | Right → ");
-            Console.SetCursorPosition(50, 8);
-            Console.Write(" Mirror \t\t A ");
-
-            Console.SetCursorPosition(50, 12);
-            Console.Write(" Player A Ghost \t ☺ ");
-            Console.SetCursorPosition(50, 14);
-            Console.Write(" Player B Ghost \t ☻ ");
-        }
-
         public void GhostToMove(char axis)
         {
-            Console.WriteLine($"What's the {axis} position of the ghost you want to control?");
+            Console.WriteLine($"\nWhat's the {axis} position of the ghost you want to control?");
         }
 
         public void ChoosePlay()
@@ -123,7 +141,7 @@ namespace _18_Ghosts
 
         public void ErrorMessage()
         {
-            Console.WriteLine("That input is not valid. Try Again...");
+            Console.WriteLine("\nThat input is not valid. Try Again...");
         }
 
         public void MoveGhost()
@@ -139,7 +157,7 @@ namespace _18_Ghosts
 
         public void PlaceGhostY()
         {
-            Console.WriteLine($"What's the Y position of the tile you want to place your ghost in?");
+            Console.WriteLine($"\nWhat's the Y position of the tile you want to place your ghost in?");
         }
 
         public void ChooseColorToFree(List<ConsoleColor> availableColors)
@@ -182,5 +200,7 @@ namespace _18_Ghosts
                     break;
             }
         }
+
+        private void ResetForeground() => Console.ForegroundColor = ConsoleColor.White;
     }
 }

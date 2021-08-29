@@ -93,7 +93,7 @@ namespace _18_Ghosts
             do
             {
                 // Dar render ao tabuleiro
-                render.RenderBoard(board);
+                render.RenderScene(board, currentPlayer);
 
                 // Quando o jogador tem fantasmas para jogar é obrigado a faze-lo
                 if (currentPlayer.Ghosts.Count != 0)
