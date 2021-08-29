@@ -265,7 +265,7 @@ namespace _18_Ghosts
             {
                 for (int x = 0; x < 5; x++)
                 {
-                    if (board[y, x].TileGhost == null)
+                    if (board[y, x].TileGhost == null && !board[y, x].isExitTile && !board[y, x].isMirrorTile)
                     {
                         for (int i = 0; i < dungeon.Count; i++)
                         {
