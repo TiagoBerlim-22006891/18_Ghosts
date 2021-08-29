@@ -6,7 +6,14 @@ namespace _18_Ghosts
 {
     class Renderer
     {
-        public Renderer() {}
+        int consoleX;
+        int consoleY;
+
+        public Renderer() 
+        {
+            consoleX = 0;
+            consoleY = 0;
+        }
 
         public void RenderMenu()
         {
@@ -34,11 +41,35 @@ namespace _18_Ghosts
         public void RenderBoard(Tile[,] board)
         {
             Console.Clear();
+
+            Console.WriteLine();
+            Console.WriteLine(" _______________________________________________ ");
+            Console.WriteLine("|       |       |       |       |       |       |");
+            Console.WriteLine("|       |       |       |       |       |       |");
+            Console.WriteLine("|_______|_______|_______|_______|_______|       |");
+            Console.WriteLine("|       |       |       |       |       |       |");
+            Console.WriteLine("|       |       |       |       |       |       |");
+            Console.WriteLine("|_______|_______|_______|_______|_______|       |");
+            Console.WriteLine("|       |       |       |       |       |       |");
+            Console.WriteLine("|       |       |       |       |       |       |");
+            Console.WriteLine("|_______|_______|_______|_______|_______|       |");
+            Console.WriteLine("|       |       |       |       |       |       |");
+            Console.WriteLine("|       |       |       |       |       |       |");
+            Console.WriteLine("|_______|_______|_______|_______|_______|       |");
+            Console.WriteLine("|       |       |       |       |       |       |");
+            Console.WriteLine("|       |       |       |       |       |       |");
+            Console.WriteLine("|_______|_______|_______|_______|_______|_______|");
+
             for (int y = 0; y < 5; y++)
             {
+                
+                consoleY = (y + 1) * 3;
+
                 for (int x = 0; x < 5; x++)
                 {
-                    Console.SetCursorPosition(x, y);
+                    consoleX = (x * 2 + 1) * 4;
+
+                    Console.SetCursorPosition(consoleX, consoleY);
 
                     if (board[y, x].TileColor != ConsoleColor.Black)
                     {
@@ -58,8 +89,25 @@ namespace _18_Ghosts
                     Console.ForegroundColor = ConsoleColor.White;
                 }
             }
-            Console.ReadKey();
-            Console.ReadKey();
+
+            HelpMenu();
+
+            Console.SetCursorPosition(0, 18);
+        }
+
+        public void HelpMenu()
+        {
+            Console.SetCursorPosition(50, 4);
+            Console.Write(" Carpet \t\t ║  ╔ ╗ ═ ╚ ╝ ╬ ╦ ╩ ╠ ╣ ");
+            Console.SetCursorPosition(50, 6);
+            Console.Write(" Portal \t\t Up ↑ | Down ↓ | Left ←  | Right → ");
+            Console.SetCursorPosition(50, 8);
+            Console.Write(" Mirror \t\t A ");
+
+            Console.SetCursorPosition(50, 12);
+            Console.Write(" Player A Ghost \t ☺ ");
+            Console.SetCursorPosition(50, 14);
+            Console.Write(" Player B Ghost \t ☻ ");
         }
 
         public void GhostToMove(char axis)
