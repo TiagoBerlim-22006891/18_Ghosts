@@ -4,6 +4,9 @@ using System.Text;
 
 namespace _18_Ghosts
 {
+    /// <summary>
+    /// Orientação que as saidas podem ter
+    /// </summary>
     enum TileOrientation
     {
         None = 0,

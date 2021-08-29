@@ -3,17 +3,27 @@ using System.Collections.Generic;
 
 namespace _18_Ghosts
 {
+    /// <summary>
+    /// Class Renderer responsavel por dar render a tudo no jogo
+    /// </summary>
     class Renderer
     {
+        // Indica o X e Y na consola
         int consoleX;
         int consoleY;
 
+        /// <summary>
+        /// Construtor de Renderer
+        /// </summary>
         public Renderer() 
         {
             consoleX = 0;
             consoleY = 0;
         }
 
+        /// <summary>
+        /// Da render ao menu do jogo
+        /// </summary>
         public void RenderMenu()
         {
             Console.Clear();
@@ -37,6 +47,12 @@ namespace _18_Ghosts
             Console.WriteLine("\t  ---------------------");
         }
 
+        /// <summary>
+        /// Da render a scene do jogo
+        /// </summary>
+        /// <param name="board">Referencia para o tabuleiro de jogo</param>
+        /// <param name="dungeon">Referencia para a dungeon</param>
+        /// <param name="currentPlayer">Referencia para o jogador actual</param>
         public void RenderScene(Tile[,] board, List<Ghost> dungeon, Player currentPlayer)
         {
             Console.Clear();
@@ -113,6 +129,9 @@ namespace _18_Ghosts
             PlayerStats(currentPlayer);
         }
 
+        /// <summary>
+        /// Da render a uma legenda lateral com algumas informações de ajuda
+        /// </summary>
         private void HelpMenu()
         {
             Console.SetCursorPosition(50, 2);
@@ -127,6 +146,10 @@ namespace _18_Ghosts
             Console.Write(" Player B Ghost \t ☻ ");
         }
 
+        /// <summary>
+        /// Da render as stats do jogador actual
+        /// </summary>
+        /// <param name="currentPlayer">Referencia para o jogador actual</param>
         private void PlayerStats(Player currentPlayer)
         {
             Console.SetCursorPosition(50, 13);
@@ -148,38 +171,62 @@ namespace _18_Ghosts
             Console.SetCursorPosition(0, 18);
         }
 
+        /// <summary>
+        /// Pede ao jogador que fantasma ele quer mexer
+        /// </summary>
+        /// <param name="axis">O axis em que o fantasma vai mexer (X ou Y)</param>
         public void GhostToMove(char axis)
         {
             Console.WriteLine($"\nWhat's the {axis} position of the ghost you want to control?");
         }
 
+        /// <summary>
+        /// Pergunta ao jogador se ele quer mover ou libertar um fantasma
+        /// </summary>
         public void ChoosePlay()
         {
             Console.WriteLine("(F - Free Ghost; M - Move Ghost)");
             Console.WriteLine("Do you want to Move a Ghost or Free a Ghost from the Dungeon?");
         }
 
+        /// <summary>
+        /// Mostra uma mensagem de erro ao jogador
+        /// </summary>
         public void ErrorMessage()
         {
             Console.WriteLine("\nThat input is not valid. Try Again...");
         }
 
+        /// <summary>
+        /// Informa o jogador de como ele pode mover o fantasma
+        /// </summary>
         public void MoveGhost()
         {
             Console.WriteLine("\nUse the arrow keys to move your ghost...");
         }
 
+        /// <summary>
+        /// Pede ao jogador o X no tabuleiro do fantasma a jogar
+        /// </summary>
+        /// <param name="color">A cor da sala em que o fantasma tem que ser jogado</param>
         public void PlaceGhost(ConsoleColor color)
         {
             Console.WriteLine($"You have a {color} Ghost, it must be place on a {color} Tile...");
             Console.WriteLine($"What's the X position of the tile you want to place your ghost in?");
         }
 
+        /// <summary>
+        /// Pede ao jogador o Y no tabuleiro do fantasma a jogar
+        /// </summary>
         public void PlaceGhostY()
         {
             Console.WriteLine($"\nWhat's the Y position of the tile you want to place your ghost in?");
         }
 
+        /// <summary>
+        /// Pergunta ao jogador que cor de fantasma ele quer libertar
+        /// </summary>
+        /// <param name="availableColors"></param>
         public void ChooseColorToFree(List<ConsoleColor> availableColors)
         {
             Console.Write("(");
@@ -200,11 +247,19 @@ namespace _18_Ghosts
             Console.WriteLine("What's the color of the ghost you want to free?");
         }
 
+        /// <summary>
+        /// Informa o jogador de que o fantasma foi liberto
+        /// </summary>
+        /// <param name="color"></param>
         public void GhostWasFreed(ConsoleColor color)
         {
             Console.WriteLine($"Your {color} Ghost was freed!");
         }
 
+        /// <summary>
+        /// Informa que jogador ganhou o jogo
+        /// </summary>
+        /// <param name="winCondition">A condição de vitoria</param>
         public void RenderWinner(int winCondition)
         {
             switch (winCondition)
@@ -221,6 +276,9 @@ namespace _18_Ghosts
             }
         }
 
+        /// <summary>
+        /// Reset da cor da consola para branco
+        /// </summary>
         private void ResetForeground() => Console.ForegroundColor = ConsoleColor.White;
     }
 }
