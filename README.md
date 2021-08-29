@@ -20,7 +20,7 @@ baixo.
 Este diagrama mostra a estrutura de classes encontrada no programa como também
 a relação entre elas.
 
-![UMLDiagram](UMLDiagram.png)
+![UMLDiagram](https://raw.githubusercontent.com/TiagoBerlim-22006891/18_Ghosts/main/UML.png)
 
 ## Referencias
 
