@@ -9,17 +9,25 @@ namespace _18_Ghosts
     /// </summary>
     class Ghost
     {
-        // A sprite do fantasma
+        /// <summary>
+        /// A sprite do fantasma
+        /// </summary>
         public char Sprite { get; }
 
-        // O dono do fantasma
+        /// <summary>
+        /// O dono do fantasma
+        /// </summary>
         public PlayerType Owner { get; }
 
-        // A cor do fantasma
+        /// <summary>
+        /// A cor do fantasma
+        /// </summary>
         public ConsoleColor GhostColor { get; }
 
-        // Se o fantasma se encontra em jogo
         private bool inGame;
+        /// <summary>
+        /// Se o fantasma se encontra em jogo
+        /// </summary>
         public bool InGame { 
             get => inGame; 
             set { 

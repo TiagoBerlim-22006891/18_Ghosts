@@ -9,21 +9,30 @@ namespace _18_Ghosts
     /// </summary>
     struct Tile
     {
-        // Cor do tile
+        /// <summary>
+        /// Cor do tile
+        /// </summary>
         public ConsoleColor TileColor { get; }
-        
-        // Orientação do Tile
+
         private TileOrientation orientation;
+        /// <summary>
+        /// Orientação do Tile
+        /// </summary>
         public TileOrientation Orientation {
             get => orientation;
             set => orientation = (int)value == 5 ? TileOrientation.Up : value;
         }
 
-        // Fantasma presente no Tile
+        /// <summary>
+        /// Fantasma presente no Tile
+        /// </summary>
         public Ghost TileGhost { get; set; }
 
-        // Sprite default do Tile
+
         private string sprite;
+        /// <summary>
+        /// Sprite default do Tile
+        /// </summary>
         public string Sprite {
             get
             {
@@ -43,9 +52,13 @@ namespace _18_Ghosts
             }
         }
 
-        // Se é um tile de saida
+        /// <summary>
+        /// Se é um tile de saida
+        /// </summary>
         public bool isExitTile { get; }
-        // Se é um tile espelho
+        /// <summary>
+        /// Se é um tile espelho
+        /// </summary>
         public bool isMirrorTile { get; }
 
         /// <summary>

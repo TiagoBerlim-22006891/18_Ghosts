@@ -9,13 +9,19 @@ namespace _18_Ghosts
     /// </summary>
     class Player
     {
-        // Lista de fantasmas que o jogador tem para jogar
+        /// <summary>
+        /// Lista de fantasmas que o jogador tem para jogar
+        /// </summary>
         public List<Ghost> Ghosts { get; private set; }
 
-        // Quantos fantasmas já escaparam
+        /// <summary>
+        /// Quantos fantasmas já escaparam
+        /// </summary>
         public int EscapedGhosts { get; set; }
 
-        // O tipo do jogador
+        /// <summary>
+        /// O tipo do jogador
+        /// </summary>
         public PlayerType Type { get; }
         
         /// <summary>
