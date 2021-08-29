@@ -67,6 +67,12 @@ namespace _18_Ghosts
             Console.WriteLine($"What's the {axis} position of the ghost you want to control?");
         }
 
+        public void ChoosePlay()
+        {
+            Console.WriteLine("(F - Free Ghost; M - Move Ghost)");
+            Console.WriteLine("Do you want to Move a Ghost or Free a Ghost from the Dungeon?");
+        }
+
         public void ErrorMessage()
         {
             Console.WriteLine("That input is not valid. Try Again...");
@@ -75,6 +81,42 @@ namespace _18_Ghosts
         public void MoveGhost()
         {
             Console.WriteLine("Use the arrow keys to move your ghost...");
+        }
+
+        public void PlaceGhost(ConsoleColor color)
+        {
+            Console.WriteLine($"You have a {color} Ghost, it must be place on a {color} Tile...");
+            Console.WriteLine($"What's the X position of the tile you want to place your ghost in?");
+        }
+
+        public void PlaceGhostY()
+        {
+            Console.WriteLine($"What's the Y position of the tile you want to place your ghost in?");
+        }
+
+        public void ChooseColorToFree(List<ConsoleColor> availableColors)
+        {
+            Console.Write("(");
+            if (availableColors.Contains(ConsoleColor.Red))
+            {
+                Console.Write("R - Red; ");
+            }
+            if (availableColors.Contains(ConsoleColor.Blue))
+            {
+                Console.Write("B - Blue; ");
+            }
+            if (availableColors.Contains(ConsoleColor.Yellow))
+            {
+                Console.Write("Y - Yellow;");
+            }
+            Console.WriteLine(")");
+
+            Console.WriteLine("What's the color of the ghost you want to free?");
+        }
+
+        public void GhostWasFreed(ConsoleColor color)
+        {
+            Console.WriteLine($"Your {color} Ghost was freed!");
         }
 
         public void RenderWinner(int winCondition)

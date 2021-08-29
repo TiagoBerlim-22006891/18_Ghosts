@@ -14,12 +14,16 @@ namespace _18_Ghosts
 
         private Tile[,] board;
         private List<Ghost> dungeon;
+        private List<ConsoleColor> availableColor;
 
         private Player currentPlayer;
         private Player playerOne;
         private Player playerTwo;
 
         private int winCondition;
+
+        private bool chooseFreeGhost;
+        private bool validChoice;
 
         // Posição x e y actual
         private int xPos;
@@ -35,7 +39,7 @@ namespace _18_Ghosts
 
             dungeon = new List<Ghost>();
 
-            gameOver = false;
+            availableColor = new List<ConsoleColor>();
 
             rand = new Random();
         }
@@ -78,6 +82,7 @@ namespace _18_Ghosts
 
             currentPlayer = playerOne;
 
+            chooseFreeGhost = false;
             PlaceGhosts();
 
             GameLoop();
@@ -90,23 +95,122 @@ namespace _18_Ghosts
                 // Dar render ao tabuleiro
                 render.RenderBoard(board);
 
-                do
+                // Quando o jogador tem fantasmas para jogar é obrigado a faze-lo
+                if (currentPlayer.Ghosts.Count != 0)
                 {
-                    // Pede ao utilizador a localização do fantasma que ele quer mover
-                    render.GhostToMove('X');
+                    validChoice = false;
 
-                    // Da update à posição selecionada pelo jogador
-                    xPos = UpdateXY();
+                    do
+                    {
+                        render.PlaceGhost(currentPlayer.Ghosts[0].GhostColor);
 
-                    // Pede ao utilizador a localização em Y do fantasma que ele quer mexer
-                    render.GhostToMove('Y');
+                        xPos = UpdateXY();
 
-                    // Da update à posição selecionada pelo jogador
-                    yPos = UpdateXY();
+                        render.PlaceGhostY();
 
-                } while (!CheckHouse());
+                        yPos = UpdateXY();
 
-                MoveGhost();
+                        if (board[yPos, xPos].TileGhost == null && board[yPos, xPos].TileColor == currentPlayer.Ghosts[0].GhostColor)
+                        {
+                            validChoice = true;
+                        }
+                        else
+                        {
+                            render.ErrorMessage();
+                        }
+
+                    } while (!validChoice);
+
+                    board[yPos, xPos].TileGhost = currentPlayer.Ghosts[0];
+                    currentPlayer.Ghosts.RemoveAt(0);
+                }
+                else
+                {
+                    string choice;
+
+                    if (dungeon.Count != 0 && CheckFreeableGhost())
+                    {
+                        do
+                        {
+                            render.ChoosePlay();
+
+                            choice = Console.ReadLine();
+                            choice = choice.ToLower();
+
+                            if (choice != "f" && choice != "m")
+                            {
+                                render.ErrorMessage();
+                            }
+                        } while (choice != "f" && choice != "m");
+
+                        chooseFreeGhost = choice == "f";
+                    }
+
+                    if (dungeon.Count == 0 || !chooseFreeGhost)
+                    {
+                        do
+                        {
+                            // Pede ao utilizador a localização do fantasma que ele quer mover
+                            render.GhostToMove('X');
+
+                            // Da update à posição selecionada pelo jogador
+                            xPos = UpdateXY();
+
+                            // Pede ao utilizador a localização em Y do fantasma que ele quer mexer
+                            render.GhostToMove('Y');
+
+                            // Da update à posição selecionada pelo jogador
+                            yPos = UpdateXY();
+
+                        } while (!CheckHouse());
+
+                        MoveGhost();
+                    }
+                    else if (chooseFreeGhost)
+                    {
+                        chooseFreeGhost = false;
+                        validChoice = false;
+
+                        do
+                        {
+                            render.ChooseColorToFree(availableColor);
+
+                            choice = Console.ReadLine();
+                            choice = choice.ToLower();
+
+                            switch (choice)
+                            {
+                                case "r":
+                                    if (availableColor.Contains(ConsoleColor.Red))
+                                    {
+                                        FreeGhostFromDungeon(ConsoleColor.Red);
+                                        validChoice = true;
+                                    }
+                                    break;
+                                case "b":
+                                    if (availableColor.Contains(ConsoleColor.Blue))
+                                    {
+                                        FreeGhostFromDungeon(ConsoleColor.Blue);
+                                        validChoice = true;
+                                    }
+                                    break;
+                                case "y":
+                                    if (availableColor.Contains(ConsoleColor.Yellow))
+                                    {
+                                        FreeGhostFromDungeon(ConsoleColor.Yellow);
+                                        validChoice = true;
+                                    }
+                                    break;
+                                default:
+                                    render.ErrorMessage();
+                                    break;
+                            }
+
+                        } while (!validChoice);
+
+                        Console.ReadKey(true);
+                    }
+                }
 
                 CheckPortalRotation();
 
@@ -119,10 +223,67 @@ namespace _18_Ghosts
                     winCondition = winCondition == 1 ? 3 : 2;
                 }
 
+                currentPlayer = currentPlayer == playerOne ? playerTwo : playerOne;
+
             } while (winCondition == 0);
 
             render.RenderWinner(winCondition);
             Console.ReadKey();
+        }
+
+        private void FreeGhostFromDungeon(ConsoleColor color)
+        {
+            for (int i = 0; i < dungeon.Count; i++)
+            {
+                if (dungeon[i].GhostColor == color && dungeon[i].Owner == currentPlayer.Type)
+                {
+                    if (currentPlayer.Type == PlayerType.A)
+                    {
+                        playerTwo.Ghosts.Add(dungeon[i]);
+                        dungeon.RemoveAt(i);
+                        render.GhostWasFreed(color);
+                        break;
+                    }
+                    else
+                    {
+                        playerOne.Ghosts.Add(dungeon[i]);
+                        dungeon.RemoveAt(i);
+                        render.GhostWasFreed(color);
+                        break;
+                    }
+                }
+            }
+        }
+
+        private bool CheckFreeableGhost()
+        {
+            bool freeable = false;
+
+            availableColor.Clear();
+
+            for (int y = 0; y < 5; y++)
+            {
+                for (int x = 0; x < 5; x++)
+                {
+                    if (board[y, x].TileGhost == null)
+                    {
+                        for (int i = 0; i < dungeon.Count; i++)
+                        {
+                            if (dungeon[i].Owner == currentPlayer.Type &&
+                                dungeon[i].GhostColor == board[y, x].TileColor)
+                            {
+                                if (availableColor.Count == 0 || !availableColor.Contains(dungeon[i].GhostColor))
+                                {
+                                    availableColor.Add(dungeon[i].GhostColor);
+                                }
+                                freeable = true;
+                            }
+                        }
+                    }
+                }
+            }
+
+            return freeable;
         }
 
         // Verificamos se o fantasma pode escapar
@@ -175,13 +336,13 @@ namespace _18_Ghosts
             switch (board[4, 2].Orientation)
             {
                 case TileOrientation.Left:
-                    GhostTryEscape(1, 4, ConsoleColor.Yellow);
+                    GhostTryEscape(1, 4, ConsoleColor.Blue);
                     break;
                 case TileOrientation.Up:
-                    GhostTryEscape(2, 3, ConsoleColor.Yellow);
+                    GhostTryEscape(2, 3, ConsoleColor.Blue);
                     break;
                 case TileOrientation.Right:
-                    GhostTryEscape(3, 4, ConsoleColor.Yellow);
+                    GhostTryEscape(3, 4, ConsoleColor.Blue);
                     break;
             }
         }
@@ -318,12 +479,14 @@ namespace _18_Ghosts
         {
             Player currentPlaying;
 
-            bool ghostPlaced = false;
+            bool ghostPlaced;
 
             for (int y = 0; y < 5; y++)
             {
                 for (int x = 0; x < 5; x++)
                 {
+                    ghostPlaced = false;
+
                     if (board[y, x].isExitTile || board[y, x].isMirrorTile)
                     {
                         continue;
@@ -339,8 +502,6 @@ namespace _18_Ghosts
 
                         TryPlacing(currentPlaying, x, y);
                     }
-
-                    ghostPlaced = false;
                 }
             }
         }
@@ -353,6 +514,7 @@ namespace _18_Ghosts
                 {
                     ghost.InGame = true;
                     board[y, x].TileGhost = ghost;
+                    currentPlaying.Ghosts.Remove(ghost);
                     return true;
                 }
             }
